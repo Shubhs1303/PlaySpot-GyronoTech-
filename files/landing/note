@@ -1,0 +1,72 @@
+    <?php
+        if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']==true) {
+            # code...
+            echo"
+            <a href='logout.php'>
+                <div class='logout'>
+                LOG OUT
+                </div>
+            </a>";
+            
+        }
+    ?>
+
+    <?php
+        if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']==true) {
+            # code...
+            echo"<h1 style='text-align:center; margin-top:200px'>Welcome to Play spot - $_SESSION[name]</h1>";
+        
+        }
+    ?>
+
+
+
+
+
+<?php 
+require('../../connect.php');
+session_start();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlaySpot</title>
+
+    <link rel="shortcut icon" href="playlogo.png" type="image/svg+xml">
+
+    <link rel="stylesheet" href="landing.css">
+
+    <link rel="preconnect" href="https://fonts.googsleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <?php
+        if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']==true) {
+            # code...
+            echo"
+            <a href='logout.php'>
+                <div class='logout'>
+                LOG OUT
+                </div>
+            </a>";
+            
+        }
+        
+    ?>
+
+    <?php
+    echo"
+    <div class='text'>
+
+    </div>
+    "
+    ?>
+
+    
+</body>
+</html>

@@ -1,0 +1,103 @@
+<?php
+session_start();
+require('../../../../connect.php');
+
+
+if (isset($_POST['save'])) 
+{
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $mobile = $_POST['mobile'];
+    $turf_name = $_POST['turf_name'];
+    $location = $_POST['location'];
+    $type = $_POST['type'];
+    $description = $_POST['description'];
+    $initial_price = $_POST['initial_price'];
+    $offer_price = $_POST['offer_price'];
+
+    $image = $_FILES['photos']['name'];
+    $path = "../../../uploads";
+    $image_ext = pathinfo($image, PATHINFO_EXTENSION);
+    $filename = time().'.'.$image_ext;
+
+    $query= "INSERT INTO `turfs`(`tname`, `owner_email`, `location`, `owner`, `owner_mobile`, `rating`, `type`, `description`, `offer price`, `intial price`, `image`) VALUES ('$turf_name','$email','$location','$name','$mobile','','$type','$description','$offer_price','$initial_price','$filename')";
+
+    $turf_exist_query="SELECT * FROM turfs WHERE tname ='$turf_name'";
+    $result=mysqli_query($con,$turf_exist_query);
+    if ($result) {
+        if (mysqli_num_rows($result)) {
+            $result_fetch=mysqli_fetch_assoc($result);
+            if($result_fetch['tname']==$_POST['turf_name'])
+            {
+                echo"
+                <script>
+                alert('$result_fetch[email] - Turf already exist');
+                window.location.href='add.php';
+                </script>
+                ";
+            }
+        }
+        else{
+
+            $query= "INSERT INTO `turfs`(`tname`, `owner_email`, `location`, `owner`, `owner_mobile`, `rating`, `type`, `description`, `offer price`, `intial price`, `image`) VALUES ('$turf_name','$email','$location','$name','$mobile','','$type','$description','$offer_price','$initial_price','$filename')";
+            
+            if(mysqli_query($con,$query))
+            {
+                move_uploaded_file($_FILES['$image']['tmp_name'],$path.'/'.$filename);
+
+                echo"
+                <script>
+                alert('Turf Added Successfully');
+                window.location.href='add.php';
+                </script>
+                ";
+            }
+            else{
+                echo"
+                <script>
+                alert('Cannot run query');
+                window.location.href='add.php';
+                </script>
+                ";
+            }
+        }
+    }
+    else {
+        echo"
+        <script>
+        alert('Cannot run Query');
+        window.location.href='admin_register.php';
+        </script>
+        ";
+    }
+
+
+
+
+}
+
+?>
+
+
+
+
+<div class="custom_form">
+                
+                    <form class="custom__form" id="custom__form">
+                        <p>Add image</p>
+                        <div class="custom__image-container">
+                            <label id="add-img-label" for="add-single-img">+</label>
+                            <input type="file" id="add-single-img" accept="image/jpeg" />
+                        </div>
+                        <input
+                            type="file"
+                            id="image-input"
+                            name="photos"
+                            accept="image/jpeg"
+                            multiple
+                        />
+                        <br />
+                        <div class="form__controls" form="custom__form"><button type="submit">Submit</button></div>
+                    </form>
+                    <div id="custom__print-files"></div>
+                </div>
